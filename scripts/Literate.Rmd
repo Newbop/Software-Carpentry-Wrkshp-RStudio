@@ -1,0 +1,64 @@
+---
+title: "Life Expectancies"
+author: "Denis Ryan"
+date: "12 January 2018"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+  
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Import Library
+library(ggplot2)
+
+#Path to gapminder data
+gapminder <- read.table("https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv" ,sep = ",", header = TRUE)
+```
+
+## Introduction
+
+We are going to present some results for the Life Expectancies and GDP of various nations.
+
+### Life Expectancy by Continent
+
+We examined life expectancy by continent and nation.
+
+```{r lifexp, echo = FALSE}
+g <- ggplot(data=gapminder, aes(x=year, y=lifeExp, colour=continent, group=country))
+g + geom_line() + scale_y_log10() + facet_wrap(~continent) 
+```
+
+### GDP by Continent
+
+We examined GDP by continent and nation.
+
+```{r GDP, echo = FALSE}
+g <- ggplot(data=gapminder, aes(x=year, y=gdpPercap, colour=continent, group=country))
+g + geom_line() + scale_y_log10() + facet_wrap(~continent) 
+```
+
+### GDPvs Population by Continent
+
+We examined GDP vs Population by continent and nation.
+
+```{r GDPvspop, echo = FALSE}
+g <- ggplot(data=gapminder, aes(x=pop, y=gdpPercap))
+g <- g + geom_point(aes(colour=continent))
+g + scale_y_log10() +scale_x_log10() + geom_density_2d() + facet_wrap(~continent) 
+```
+
+### Trying to divide gdp v pop from year to year...
+
+As above so below
+
+```{r GDPvspop2, echo = FALSE}
+g <- ggplot(data=gapminder, aes(x=pop, y=gdpPercap))
+g <- g + geom_point(aes(colour=continent))
+g + scale_y_log10() +scale_x_log10() + geom_density_2d() + facet_wrap(~year) 
+```
+
